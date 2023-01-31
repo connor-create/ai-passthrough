@@ -30,10 +30,11 @@ class Handler(BaseHTTPRequestHandler):
         try:
             # Query model
             response_string = query_model(model, query_string)
+            response_data = {"response": response_string}
             self.send_response(200)
             self.send_header("Content-type", "application/json")
             self.end_headers()
-            self.wfile.write(bytes(response_string, "utf-8"))
+            self.wfile.write(bytes(str(response_data), "utf-8"))
         except Exception as e:
             self._send_error(f"Unhandled/unspecific error: {str(e)}")
 
